@@ -1,0 +1,24 @@
+{
+  "name": "rammio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "changeset": "changeset",
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "release": "pnpm build && changeset publish",
+    "test": "pnpm -r run test",
+    "typecheck": "pnpm -r run typecheck",
+    "version": "pnpm changeset version"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.7",
+    "@changesets/cli": "^2.29.0",
+    "@rammio/biome-config": "workspace:*"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.18"
+  }
+}

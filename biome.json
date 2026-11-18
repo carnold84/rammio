@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["@rammio/biome-config/biome"],
+  "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
+}

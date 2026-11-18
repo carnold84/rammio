@@ -1,0 +1,174 @@
+{
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedInterfaceMembers": "on",
+        "useSortedPackageJson": "on",
+        "useSortedProperties": "on"
+      }
+    }
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/coverage",
+      "!**/*.gen.ts",
+      "!**/routeTree.gen.ts",
+      "!**/.changeset",
+      "!**/.agents/skills",
+      "!**/.claude/skills"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "linter": {
+    "domains": {
+      "react": "recommended"
+    },
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error"
+      },
+      "performance": {
+        "noBarrelFile": "error",
+        "noReExportAll": "error"
+      },
+      "style": {
+        "noDefaultExport": "error",
+        "noEnum": "error",
+        "noNamespace": "error",
+        "noParameterProperties": "error",
+        "useComponentExportOnlyModules": {
+          "level": "warn",
+          "options": { "allowConstantExport": true }
+        },
+        "useConsistentTypeDefinitions": {
+          "level": "warn",
+          "options": { "style": "type" }
+        },
+        "useExportType": "error",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"],
+            "requireAscii": true,
+            "strictCase": true
+          }
+        },
+        "useImportType": "error",
+        "useNamingConvention": {
+          "level": "warn",
+          "options": {
+            "conventions": [
+              {
+                "formats": [
+                  "camelCase",
+                  "PascalCase",
+                  "snake_case",
+                  "CONSTANT_CASE"
+                ],
+                "selector": { "kind": "objectLiteralProperty" }
+              },
+              {
+                "formats": [
+                  "camelCase",
+                  "PascalCase",
+                  "snake_case",
+                  "CONSTANT_CASE"
+                ],
+                "selector": { "kind": "typeProperty" }
+              }
+            ],
+            "requireAscii": true,
+            "strictCase": false
+          }
+        },
+        "useReactFunctionComponents": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/*.config.*",
+        "**/*.stories.tsx",
+        "**/.storybook/**",
+        "**/*.d.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": { "noDefaultExport": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["**/routes/**"],
+      "linter": {
+        "rules": {
+          "style": { "useFilenamingConvention": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/index.{ts,tsx,js,jsx}"],
+      "linter": {
+        "rules": {
+          "performance": { "noBarrelFile": "off", "noReExportAll": "off" }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/features/*/index.{ts,tsx}",
+        "**/components/*/index.{ts,tsx}"
+      ],
+      "linter": {
+        "rules": {
+          "performance": { "noBarrelFile": "off" }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": { "useNamingConvention": "off" }
+        }
+      }
+    },
+    {
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
+      "includes": ["**/package.json"]
+    }
+  ]
+}
