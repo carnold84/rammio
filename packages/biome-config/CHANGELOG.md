@@ -1,5 +1,11 @@
 # @rammio/biome-config
 
+## 0.1.2
+
+### Patch Changes
+
+- Publish from CI with provenance
+
 ## 0.1.1
 
 ### Patch Changes
