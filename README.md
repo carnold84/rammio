@@ -20,9 +20,12 @@ pnpm fix        # apply safe fixes and formatting
 
 Releases run from CI ([`.github/workflows/release.yml`](.github/workflows/release.yml)) using [changesets](https://github.com/changesets/changesets) and npm trusted publishing. No npm token is stored in the repo.
 
-1. Run `pnpm changeset` to describe the change and pick a version bump, then commit the generated file with your change.
-2. When it lands on `main`, the Release workflow opens or updates a "Version Packages" PR that bumps versions and changelogs.
-3. Merging that PR publishes the changed packages to npm with provenance.
+```sh
+pnpm changeset    # describe the change and pick a version bump
+pnpm run version  # apply it: bump versions, update changelogs
+```
+
+Commit the result and push to `main`. The Release workflow publishes every package whose version isn't on npm yet, with provenance. If a changeset reaches `main` before you've run `pnpm run version`, the workflow fails instead of silently skipping the release.
 
 ### One-time setup for a new package
 
@@ -31,5 +34,3 @@ You can only configure trusted publishing for a package that already exists on n
 1. `npm login`, then `pnpm release` from a clean `main`.
 2. On npmjs.com, go to the package's Settings → Trusted publishing → GitHub Actions and enter owner `carnold84`, repository `rammio`, workflow `release.yml`.
 3. Optional: in the same settings, set publishing access to require 2FA and disallow tokens.
-
-The repo also needs Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests" turned on.
