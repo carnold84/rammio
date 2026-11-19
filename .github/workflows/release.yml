@@ -1,8 +1,11 @@
 name: Release
 
+# Runs when a release tag (created by `pnpm changeset tag`) is pushed, e.g.
+# `@rammio/biome-config@1.2.3`. It stages that version on npm; a maintainer
+# then approves it with 2FA before it goes live.
 on:
   push:
-    branches: [main]
+    tags: ["@rammio/*@*"]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -11,13 +14,13 @@ permissions:
   id-token: write # npm trusted publishing (OIDC)
 
 jobs:
-  release:
+  stage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
-      # Versions are bumped locally. A changeset file still on main means
-      # `pnpm run version` was skipped, so nothing would publish.
+      # A changeset file still in the tagged commit means `pnpm run version`
+      # was skipped, so the tag points at an unbumped version.
       - name: Check for unversioned changesets
         run: |
           if ls .changeset/*.md | grep -v '/README.md$'; then
@@ -30,7 +33,6 @@ jobs:
       # No `registry-url`: the .npmrc it writes expects NODE_AUTH_TOKEN and
       # would take precedence over the OIDC exchange. No dependency cache
       # either: this job can publish, so it shouldn't restore shared state.
-      # Node 26 bundles npm 11.20, above the 11.5.1 trusted publishing needs.
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -39,5 +41,27 @@ jobs:
 
       - run: pnpm check
 
-      # Publishes any package whose version isn't on npm yet; no-op otherwise.
-      - run: pnpm release
+      - name: Stage on npm
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          name="${TAG%@*}"
+          version="${TAG##*@}"
+
+          if ! info="$(pnpm --filter "$name" --fail-if-no-match ls --json --depth -1)"; then
+            echo "::error::No workspace package named $name."
+            exit 1
+          fi
+          actual="$(node -p 'JSON.parse(process.argv[1])[0].version' "$info")"
+          if [ "$actual" != "$version" ]; then
+            echo "::error::Tag $TAG doesn't match $name's package.json version ($actual)."
+            exit 1
+          fi
+
+          # Prereleases can't take the default `latest` tag.
+          flags=()
+          if [[ "$version" == *-* ]]; then flags+=(--tag next); fi
+
+          # Skips the package if this version is already on npm. Git checks are
+          # off because a tag checkout isn't on a branch.
+          pnpm --filter "$name" stage publish --access public --no-git-checks "${flags[@]}"
