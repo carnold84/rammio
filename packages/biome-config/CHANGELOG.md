@@ -1,5 +1,11 @@
 # @rammio/biome-config
 
+## 0.1.3
+
+### Patch Changes
+
+- Change to staging release
+
 ## 0.1.2
 
 ### Patch Changes
