@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Feature: init > Scenario: a fresh project > writes only the plopfile and the AGENTS.md block 1`] = `
+"import type { NodePlopAPI } from "@rammio/scaffold";
+
+// biome-ignore lint/style/noDefaultExport: Plop runs the default export.
+export default async function plopfile(plop: NodePlopAPI): Promise<void> {
+  // The @rammio/scaffold generators. A file in ./templates replaces the
+  // package template with the same path (see node_modules/@rammio/scaffold/templates).
+  await plop.load("@rammio/scaffold", {
+    paths: { components: "src/components", hooks: "src/hooks" },
+  });
+
+  // Generators set here replace the defaults with the same name, for example:
+  // plop.setGenerator("page", { description: "", prompts: [], actions: [] });
+}
+"
+`;
+
+exports[`Feature: init > Scenario: a fresh project > writes only the plopfile and the AGENTS.md block 2`] = `
+"<!-- rammio-scaffold:start -->
+## Scaffolding
+
+This project generates components, hooks and their tests with \`@rammio/scaffold\`. Use it instead of writing that boilerplate by hand, then edit the generated files.
+
+1. \`npx rammio-scaffold list --json\` lists the generators and their inputs, with allowed values and defaults.
+2. \`npx rammio-scaffold generate <generator> --input <name>=<value> --json\` creates the files and prints them as JSON. It never prompts when any input is given: a missing or invalid input exits with a JSON error that says what to pass.
+3. If a file it would create already exists, it writes nothing and fails with FILE_EXISTS. Don't delete the existing file unless that's intended.
+
+To change what a generator produces, copy its template from \`node_modules/@rammio/scaffold/templates/\` to the same path under \`generators/templates/\` and edit the copy. Add or replace generators in \`generators/plopfile.ts\`. Never edit files in \`node_modules\`.
+<!-- rammio-scaffold:end -->
+"
+`;

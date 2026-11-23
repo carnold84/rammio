@@ -1,0 +1,21 @@
+import { act, renderHook } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { {{camelCase name}} } from "./{{kebabCase name}}";
+
+describe("{{camelCase name}}", () => {
+  it("returns the initial value", () => {
+    const { result } = renderHook(() => {{camelCase name}}("initial"));
+
+    expect(result.current.value).toBe("initial");
+  });
+
+  it("updates the value", () => {
+    const { result } = renderHook(() => {{camelCase name}}());
+
+    act(() => {
+      result.current.setValue("next");
+    });
+
+    expect(result.current.value).toBe("next");
+  });
+});

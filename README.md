@@ -7,6 +7,7 @@ Shared tooling config, published under the `@rammio` npm scope.
 | Package                                          | Description                                                             |
 | ------------------------------------------------ | ----------------------------------------------------------------------- |
 | [`@rammio/biome-config`](packages/biome-config/) | Shared Biome 2 config: formatting, import sorting, React/TS conventions |
+| [`@rammio/scaffold`](packages/scaffold/)         | Plop-based generators for React + TS + Vite, for humans and AI agents   |
 
 ## Development
 

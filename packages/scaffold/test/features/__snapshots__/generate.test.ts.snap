@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Feature: generate > Scenario: valid inputs > creates a hook and its test 1`] = `
+{
+  "src/hooks/use-counter.test.ts": "import { act, renderHook } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { useCounter } from "./use-counter";
+
+describe("useCounter", () => {
+  it("returns the initial value", () => {
+    const { result } = renderHook(() => useCounter("initial"));
+
+    expect(result.current.value).toBe("initial");
+  });
+
+  it("updates the value", () => {
+    const { result } = renderHook(() => useCounter());
+
+    act(() => {
+      result.current.setValue("next");
+    });
+
+    expect(result.current.value).toBe("next");
+  });
+});
+",
+  "src/hooks/use-counter.ts": "import { useState } from "react";
+
+export type UseCounterResult = {
+  setValue: (value: string) => void;
+  value: string;
+};
+
+export function useCounter(initialValue = ""): UseCounterResult {
+  const [value, setValue] = useState(initialValue);
+
+  return { setValue, value };
+}
+",
+}
+`;
+
+exports[`Feature: generate > Scenario: valid inputs > creates the component files and lists them as created 1`] = `
+{
+  "src/components/user-card/user-card.module.css": ".root {
+  display: block;
+}
+",
+  "src/components/user-card/user-card.test.tsx": "import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { UserCard } from "./user-card";
+
+describe("UserCard", () => {
+  it("renders its children", () => {
+    render(<UserCard>Hello</UserCard>);
+
+    expect(screen.getByText("Hello")).toBeTruthy();
+  });
+});
+",
+  "src/components/user-card/user-card.tsx": "import type { ReactNode } from "react";
+import styles from "./user-card.module.css";
+
+export type UserCardProps = {
+  children?: ReactNode;
+};
+
+export function UserCard({ children }: UserCardProps) {
+  return <div className={styles.root}>{children}</div>;
+}
+",
+}
+`;
