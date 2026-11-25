@@ -24,19 +24,21 @@ Every command takes `--json` (one JSON document on stdout) and `--cwd <dir>`.
 
 `generate` prompts only when stdin is a terminal, `CI` isn't set, and no inputs are given. Once any `--input` is passed it never prompts: a missing or invalid input fails at once with exit code 2 and says what to pass. `--interactive` prompts for the inputs you left out; `--no-interactive` never prompts.
 
-If any file it would create already exists, `generate` writes nothing and lists the conflicts.
+If any file an `add` action would create already exists, `generate` writes nothing and lists the conflicts. Actions with `skipIfExists` or `force`, and other action types (`addMany`, `modify`, custom actions), aren't checked first.
 
 ### JSON output
 
 ```json
 {
   "files": [
-    { "path": "src/components/user-card/user-card.tsx", "status": "created" }
+    { "path": "src/components/user-card/user-card.tsx", "status": "created" },
+    { "path": "src/components/user-card/user-card.test.tsx", "status": "created" },
+    { "path": "src/components/user-card/user-card.module.css", "status": "created" }
   ],
   "generator": "component",
   "inputs": {
-    "dir": "src/components",
     "name": "UserCard",
+    "dir": "src/components",
     "styles": "css-modules",
     "test": true
   },
@@ -46,7 +48,7 @@ If any file it would create already exists, `generate` writes nothing and lists 
 }
 ```
 
-Errors have `"ok": false` and `"error": { "code", "message", "details" }`. The output types (`ListOutput`, `GenerateOutput`, `InitOutput`, `ErrorOutput`) are exported from the package. Exit codes: 0 success, 1 the run failed, 2 invalid usage or input.
+Errors have `"ok": false`, `"error": { "code", "message", "details" }` and `"files"`, listing anything written before the failure. The output types (`ListOutput`, `GenerateOutput`, `InitOutput`, `ErrorOutput`) are exported from the package. Exit codes: 0 success, 1 the run failed, 2 invalid usage or input.
 
 ## Generators
 
@@ -55,11 +57,13 @@ Errors have `"ok": false` and `"error": { "code", "message", "details" }`. The o
 | `component` | `<dir>/<name>/<name>.tsx`, `.test.tsx` (Vitest + Testing Library) and `.module.css` |
 | `hook`      | `<dir>/<name>.ts` and `.test.ts`                                                    |
 
+Tests and CSS modules are optional: pass `--input test=false` or `--input styles=none` (`component` only).
+
 File names are kebab-case and exports are named, matching [`@rammio/biome-config`](../biome-config/).
 
 ## Customising
 
-Everything lives in `generators/`:
+Everything lives in `generators/`. The CLI loads `generators/plopfile.ts`, or `generators/plopfile.js` if there's no `.ts`:
 
 ```ts
 // generators/plopfile.ts
