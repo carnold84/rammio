@@ -1,0 +1,48 @@
+{
+  "name": "@rammio/scaffold",
+  "version": "0.0.0",
+  "description": "Plop-based code generators for React + TypeScript + Vite projects, built for humans and AI agents",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carnold84/rammio.git",
+    "directory": "packages/scaffold"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "rammio-scaffold": "./dist/cli/bin.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "node-plop": "~0.32.3"
+  },
+  "devDependencies": {
+    "@rammio/biome-config": "workspace:*",
+    "@types/node": "^22.20.5",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

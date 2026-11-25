@@ -1,0 +1,12 @@
+import { useState } from "react";
+
+export type {{pascalCase name}}Result = {
+  setValue: (value: string) => void;
+  value: string;
+};
+
+export function {{camelCase name}}(initialValue = ""): {{pascalCase name}}Result {
+  const [value, setValue] = useState(initialValue);
+
+  return { setValue, value };
+}

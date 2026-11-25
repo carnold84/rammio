@@ -1,12 +1,13 @@
 # rammio
 
-Shared tooling config, published under the `@rammio` npm scope.
+Shared tooling for React + TypeScript projects, published under the `@rammio` npm scope.
 
 ## Packages
 
 | Package                                          | Description                                                             |
 | ------------------------------------------------ | ----------------------------------------------------------------------- |
 | [`@rammio/biome-config`](packages/biome-config/) | Shared Biome 2 config: formatting, import sorting, React/TS conventions |
+| [`@rammio/scaffold`](packages/scaffold/)         | Plop-based generators for React + TS + Vite, for humans and AI agents   |
 
 ## Development
 
@@ -40,6 +41,6 @@ You can also approve on the package's page on npmjs.com. Tags for versions alrea
 
 You can only configure trusted publishing for a package that already exists on npm, so publish the first version by hand:
 
-1. `npm login`, then `pnpm release` from a clean `main`.
+1. `npm login`, then `pnpm release` from a clean `main`, then `git push --follow-tags` to push the tag it creates.
 2. On npmjs.com, go to the package's Settings → Trusted publishing → GitHub Actions and enter owner `carnold84`, repository `rammio`, workflow `release.yml`. Under allowed actions, leave only stage publish enabled.
 3. Optional: in the same settings, set publishing access to require 2FA and disallow tokens.

@@ -1,0 +1,16 @@
+import type { ReactNode } from "react";
+{{#if (eq styles "css-modules")}}
+import styles from "./{{kebabCase name}}.module.css";
+{{/if}}
+
+export type {{pascalCase name}}Props = {
+  children?: ReactNode;
+};
+
+export function {{pascalCase name}}({ children }: {{pascalCase name}}Props) {
+{{#if (eq styles "css-modules")}}
+  return <div className={styles.root}>{children}</div>;
+{{else}}
+  return <div>{children}</div>;
+{{/if}}
+}
