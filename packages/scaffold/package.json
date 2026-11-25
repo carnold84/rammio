@@ -1,6 +1,6 @@
 {
   "name": "@rammio/scaffold",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Plop-based code generators for React + TypeScript + Vite projects, built for humans and AI agents",
   "repository": {
     "type": "git",
